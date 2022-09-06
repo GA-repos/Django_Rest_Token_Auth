@@ -12,8 +12,9 @@ pip install django
 ```
 
 ```
-python manage.py startapp api
-(or django-admin startapp api)
+django-admin startproject django_rest_token_auth
+cd django_rest_token_auth
+django-admin startapp api
 ```
 
 
@@ -98,7 +99,7 @@ class CatSerializer(serializers.ModelSerializer):
         fields = '__all__'
 ```
 
-Next, we need to add a path to retrieve our cats in the urls.py inside of our api app:
+Next, we need to add a path to retrieve our cats in the urls.py file inside of our api app:
 
 
 ```py
