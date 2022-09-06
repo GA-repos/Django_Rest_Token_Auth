@@ -319,7 +319,24 @@ In the same folder as your Django Project (Django-REST-Token-Auth), create a rea
 ```
 npx create-react-app React-Auth-Client 
 ```
+    
+Once your application is created, we can go ahead and modify the top-level of our App.js component and test out our API by making a call to it:
 
+```js
+  const [state, setState] = useState({})
+
+  useEffect(() => {
+    console.log('useEffect Ran!')
+    fetch('http://localhost:8000/api/cats-list/')
+    .then(res => res.json())
+    .then(res => {
+      setState(res)
+      return res
+    }).then(res => console.log(res))
+  }, []) 
+```
+    
+**Don't forget to import useState and useEffect at the top**
 
 ## Further reading
 
