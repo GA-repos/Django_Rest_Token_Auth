@@ -126,9 +126,7 @@ from rest_framework.views import APIView
 
 @api_view(('GET',))
 def cats_list(request):
-    print('reached fn')
     cats = Cat.objects.all()
-    print(cats)
     serializer = CatSerializer(cats, many=True)
     return Response(serializer.data)
 
