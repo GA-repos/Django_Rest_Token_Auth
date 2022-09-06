@@ -309,6 +309,16 @@ class LoginView(APIView):
 Again, this should be fairly self explanatory. The register view simply creates a new user and sends back a success message if all is well, and any errors if not. These errors might include the custom errors we just added to the `UserSerializer`.
 
 The login view finds the user by email and verifies their password with Django's `check_password` function that's automatically added to the user object. If there's an error, we send back an error message, otherwise we create a token and send it back to the client in the response.
+    
+## Creating a React Frontend and making HTTP Requests to our Django API
+    
+So far we've implemented Token Authentication with our Django API Backend, and now its time to create a React Frontend to be our API's main client. First we need to set up our application, and then render basic login and singup forms to test our Django API.
+    
+In the same folder as your Django Project (Django-REST-Token-Auth), create a react app with the following command:
+
+```
+npx create-react-app React-Auth-Client 
+```
 
 
 ## Further reading
