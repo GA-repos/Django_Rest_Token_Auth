@@ -385,6 +385,9 @@ password <br>
 password_confirmation <br>
                                                            
 You need to have these exact fields in the signup (or login) form data that's sent in the request body. These are the default fields that come with Django's built in User Model. If you prefer to have different fields, make sure you override the default User Model in your Django backend and match those fields accordingly
+    
+Make sure you attach a call to the correct signup url to the django backend upon form submittal. Try to register a new user using your React Frontend.
+Once your component is created, import and display it in App.js
                                                            
                                                            
 ## Further reading
