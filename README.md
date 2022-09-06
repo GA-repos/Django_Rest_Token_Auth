@@ -337,6 +337,34 @@ Once your application is created, we can go ahead and modify the top-level of ou
 ```
     
 **Don't forget to import useState and useEffect at the top**
+    
+Uh Oh! We're getting a huge CORS error. CORS stands for Cross Origin Resource Sharing. To fix this error, we are going to download and use a library called (django-cors-headers)[https://pypi.org/project/django-cors-headers/]:
+    
+```
+pip install django-cors-headers
+```
+    
+We then need to configure django-cors-headers in our SETTINGS.py:
+    
+```py
+INSTALLED_APPS = [
+    "api",
+    "rest_framework",
+    "corsheaders",
+    ... ... ...
+]
+... ... ...
+    
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware', # <-------Add this line here (above Common Middleware)
+    'django.middleware.common.CommonMiddleware',
+    ...
+    ...
+    ...
+]
+```
 
 ## Further reading
 
