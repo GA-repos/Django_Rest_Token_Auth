@@ -2,16 +2,151 @@
 
 Django and Django REST Framework come with a number of authentication systems in-built. Unfortunately for us their token are not JSON Web Token (JWT), so we have two options, create our own JWT authentication middleware, or change the way we manage tokens in our client side React app. As the token authentication works well on your React apps, let's go for the custom django middleware options
 
+Before we begin, create a new folder called **Django-REST-Token-Auth** and create a python virtual environment inside it:
+
 ```
-python manage.py startapp jwt_auth
+mkdir Django-REST-Token-Auth
+cd Django-REST-Token-Auth
+pipenv shell
+pip install django 
 ```
+
+```
+python manage.py startapp api
+(or django-admin startapp api)
+```
+
+
+We need to install the Django Rest Framework, along with a few other libraries:
+
+```
+pip install djangorestframework psycopg2 psycopg2-binary 
+```
+
+Once our application is created, we need to update our SETTINGS.py with our postgresql database and our rest framework configurations:
+
+In settings.py:
+
+```py
+INSTALLED_APPS = [
+    'api',
+    'rest_framework',
+    ...,
+    ...,
+    ...
+]
+... .. ...
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'catcollector',
+    }
+}
+... .. ...
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ],
+}
+```
+
+We then need to include our paths in urls.py:
+
+```py
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('api/', include('api.urls')),
+]
+```
+
+
+## Basic REST API Cats List
+
+We will create a brief endpoint to our REST API to retrieve a list of cats using serializers and both Class Based Views and Function Based Views
+
+We need to update our models.py with a basic layout for our cats:
+
+```py
+from django.db import models
+
+# Create your models here.
+class Cat(models.Model):
+    name = models.CharField(max_length=100)
+    breed = models.CharField(max_length=100)
+    description = models.TextField(max_length=250)
+    age = models.IntegerField()
+
+    def __str__(self):
+        return self.name
+```
+
+**Don't forget to run migrations after modifying the models.py file**
+
+Create a serializers.py file inside your api app and write the following code:
+
+```py
+from rest_framework import serializers
+from .models import Cat
+
+class CatSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Cat
+        fields = '__all__'
+```
+
+Next, we need to add a path to retrieve our cats in the urls.py inside of our api app:
+
+
+```py
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('cats-list/', views.cats_list, name='cats_list'),
+    # path('cats-list/', views.CatsView.as_view(), name='cats_list'),
+]
+```
+Both paths were added to demonstrate how to use either Class Based Views or Function Based.
+
+Once that is done, we can go ahead and write the view to fetch our cats in our views.py:
+
+```py
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from .serializers import CatSerializer
+from .models import Cat
+from rest_framework.views import APIView
+
+# Create your views here.
+
+@api_view(('GET',))
+def cats_list(request):
+    print('reached fn')
+    cats = Cat.objects.all()
+    print(cats)
+    serializer = CatSerializer(cats, many=True)
+    return Response(serializer.data)
+
+
+# class CatsView(APIView):
+#     def get(self, request):
+#         cats = Cat.objects.all()
+#         serializer = CatSerializer(cats, many=True)
+#         return Response(serializer.data)
+```
+
+
 
 ## JWT middleware
 
 First off, we'll need to install a JWT library, so using _pipenv_ install _pyjwt_:
 
 ```
-pipenv install pyjwt
+pip install pyjwt
 ```
 
 
@@ -67,7 +202,7 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.BrowsableAPIRenderer',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'jwt_auth.authentication.JWTAuthentication',
+        'api.authentication.JWTAuthentication',
     ],
 }
 ```
