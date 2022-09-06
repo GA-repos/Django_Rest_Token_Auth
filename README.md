@@ -338,6 +338,8 @@ Once your application is created, we can go ahead and modify the top-level of ou
     
 **Don't forget to import useState and useEffect at the top**
     
+## Django CORS
+    
 Uh Oh! We're getting a huge CORS error. CORS stands for Cross Origin Resource Sharing. To fix this error, we are going to download and use a library called (django-cors-headers)[https://pypi.org/project/django-cors-headers/]:
     
 ```
@@ -370,6 +372,20 @@ CORS_ALLOWED_ORIGINS = ["http://localhost:3001",] # Use whichever port your Reac
 # This option will also need to be configured to include your Applications URL when deployed online                                                           
 ```
 
+## Back to React
+                                                           
+Try out the fetch one more time, and you should be able to successfully retrieve the list of cats data from our Django REST API! Nice!
+                                                           
+As a mini-activity, create a Sign up Form component with the following fields and track them in your state (**Important!**):
+                                                           
+username
+email
+password
+password_confirmation
+                                                           
+Its very important that you have these exact fields in the signup (or login) form data that's sent in the request body. These are the default fields that come with Django's built in User Model. If you prefer to have different fields, make sure you override the default User Model in your Django backend and match those fields accordingly
+                                                           
+                                                           
 ## Further reading
 
 - [PyJWT Docs](https://pyjwt.readthedocs.io/en/latest/)
