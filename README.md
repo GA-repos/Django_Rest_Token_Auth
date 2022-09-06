@@ -376,14 +376,15 @@ CORS_ALLOWED_ORIGINS = ["http://localhost:3001",] # Use whichever port your Reac
                                                            
 Try out the fetch one more time, and you should be able to successfully retrieve the list of cats data from our Django REST API! Nice!
                                                            
-As a mini-activity, create a Sign up Form component with the following fields and track them in your state (**Important!**):
+As a mini-activity, create a Sign up Form component with the following fields and track them in your state: 
+(**Important!**)
                                                            
-username
-email
-password
-password_confirmation
+username <br>
+email <br>
+password <br>
+password_confirmation <br>
                                                            
-Its very important that you have these exact fields in the signup (or login) form data that's sent in the request body. These are the default fields that come with Django's built in User Model. If you prefer to have different fields, make sure you override the default User Model in your Django backend and match those fields accordingly
+You need to have these exact fields in the signup (or login) form data that's sent in the request body. These are the default fields that come with Django's built in User Model. If you prefer to have different fields, make sure you override the default User Model in your Django backend and match those fields accordingly
                                                            
                                                            
 ## Further reading
